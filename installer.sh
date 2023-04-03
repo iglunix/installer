@@ -31,5 +31,5 @@ $answer
 EOF
 }
 
-prompt 'Select Disk' '' disk /dev/disk?
+prompt 'Select Disk' '' disk /dev/sd? /dev/nvme?n?
 prompt 'Enter Hostname' 'iglunix' hostname
