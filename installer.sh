@@ -170,5 +170,18 @@ cat > /mnt/new-root/etc/group << EOF
 root:x:0:
 EOF
 
+cat > /mnt/new-root/etc/shadow << EOF
+root::::::::
+EOF
+
+chmod 600 /mnt/new-root/etc/shadow
+
+printf 'Set root password\n'
+
+chroot /mnt/new-root /bin/busybox passwd
+
+printf 'Generating initrd\n'
+chroot /mnt/new-root /sbin/mkrd
+
 printf 'Installation should now be finished!\n'
 printf 'Chroot into your new system to inspect everything before rebooting\n'
