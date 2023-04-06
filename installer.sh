@@ -116,7 +116,7 @@ fi
 
 BOOT="$1"
 
-mkfs.vfat -n "IGLUNIX_BOOT" "$BOOT"
+mkfs.vfat -n "IGLU_BOOT" "$BOOT"
 
 printf 'Formatting Root /\n'
 
@@ -130,7 +130,7 @@ fi
 
 ROOT="$1"
 
-mkfs.ext4 -L "IGLUNIX_ROOT" "$ROOT"
+mkfs.ext4 -L "IGLU_ROOT" "$ROOT"
 
 printf 'Mounting file systems\n'
 
@@ -139,7 +139,7 @@ mount -t ext4 "$ROOT" /mnt/new-root
 mkdir -p /mnt/new-root/boot
 mount -t vfat "$BOOT" /mnt/new-root/boot
 
-boot_disk=$(blkid -L 'IGLUNIX_IMG')
+boot_disk=$(findfs LABEL='IGLUNIX_IMG')
 
 printf 'Extracting packages'
 mkdir -p /mnt/boot-disk
@@ -152,16 +152,16 @@ do
 done
 
 mkdir -p /mnt/new-root/etc
-printf 'Setting hostname'
+printf 'Setting hostname\n'
 
 printf '%s\n' "$hostname" > /mnt/new-root/etc/hostname
 
-printf 'Setting fstab'
+printf 'Setting fstab\n'
 
-printf 'LABEL=IGLUNIX_ROOT\t/\text4\tdefaults\t0\t0\n' > /mnt/new-root/etc/fstab
-printf 'LABEL=IGLUNIX_BOOT\t/boot\tvfat\tdefaults\t0\t0\n' >> /mnt/new-root/etc/fstab
+printf 'LABEL=IGLU_ROOT	/		ext4	defaults	0	0\n' > /mnt/new-root/etc/fstab
+printf 'LABEL=IGLU_BOOT	/boot	vfat	defaults	0	0\n' >> /mnt/new-root/etc/fstab
 
-printf 'Adding root user'
+printf 'Adding root user\n'
 cat > /mnt/new-root/etc/passwd << EOF
 root:x:0:0:Admin,,,:/root:/bin/sh
 EOF
