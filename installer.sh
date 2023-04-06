@@ -181,6 +181,8 @@ printf 'Set root password\n'
 chroot /mnt/new-root /bin/busybox passwd
 
 printf 'Generating initrd\n'
+mkdir -p /mnt/new-root/tmp
+mount --bind /tmp /mnt/new-root/tmp
 chroot /mnt/new-root /sbin/mkrd
 
 printf 'Installation should now be finished!\n'
