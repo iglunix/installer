@@ -56,9 +56,9 @@ confirm() {
 	done
 }
 
-#disks=$(glob_exists /dev/sd? /dev/nvme?n?)
-disks='/dev/sda
-/dev/sdb'
+set +e
+disks=$(glob_exists /dev/sd? /dev/nvme?n?)
+set -e
 prompt 'Select Disk' '' disk $disks
 prompt 'Enter Hostname' 'iglunix' hostname
 
