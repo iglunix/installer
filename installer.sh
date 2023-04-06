@@ -147,7 +147,7 @@ mount -t vfat $boot_disk /mnt/boot-disk
 pkgs=$(tar -I zstd -tf /mnt/boot-disk/pkgs.tar.zst)
 for pkg in $pkgs
 do
-	tar -xf /mnt/boot-disk/pkgs.tar.zst $pkg -C /tmp
+	tar -I zstd -xf /mnt/boot-disk/pkgs.tar.zst $pkg -C /tmp
 	tar -xf /tmp/$pkg -C /mnt/new-root
 done
 
