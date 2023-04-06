@@ -33,6 +33,7 @@ EOF
 
 glob_exists() {
 	while true
+	do
 		if [ -e "$1" ]
 		then
 			printf '%s\n' "$1"
@@ -43,6 +44,7 @@ glob_exists() {
 
 confirm() {
 	while true
+	do
 		printf 'please press Y to confirm or N to exit: '
 		read X
 		[ "$X" == "Y" ] && break
@@ -54,8 +56,9 @@ confirm() {
 	done
 }
 
-disks=$(glob_exists /dev/sd? /dev/nvme?n?)
-
+#disks=$(glob_exists /dev/sd? /dev/nvme?n?)
+disks='/dev/sda
+/dev/sdb'
 prompt 'Select Disk' '' disk $disks
 prompt 'Enter Hostname' 'iglunix' hostname
 
@@ -72,7 +75,7 @@ confirm
 printf 'Disk %s will be partitioned with the following layout: \n' "$disk"
 printf '\n'
 printf '     first 512B : MBR\n'
-printf '     next 1536B :  Empty space\n'
+printf '     next 1536B : Empty space\n'
 printf '    next 512MiB : EFI system partition  mount : /boot  format: VFAT\n'
 printf '   rest of disk : root partition        mount : /      format: EXT4\n'
 printf '\n'
@@ -91,6 +94,11 @@ p
 1048575
 t
 ef
+n
+p
+2
+1048576
+
 w
 EOF
 
