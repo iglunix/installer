@@ -149,6 +149,7 @@ for pkg in $pkgs
 do
 	tar -I zstd -xf /mnt/boot-disk/pkgs.tar.zst $pkg -C /tmp
 	tar -xf /tmp/$pkg -C /mnt/new-root
+	rm -f /tmp/$pkg
 done
 
 mkdir -p /mnt/new-root/etc
